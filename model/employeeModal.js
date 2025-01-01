@@ -64,8 +64,8 @@ const employeeSchema = mongoose.Schema({
         required:[true , "Please add the employee pinzip"]
     },
     avatar: {
-        type: String, // Use String to store the file path or URL of the image
-        default: "https://via.placeholder.com/150", // Placeholder image as default
+        type: String, 
+        default : ""
       },
 },{
     timestamps:true

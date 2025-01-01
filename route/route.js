@@ -16,10 +16,10 @@ router.get("/users",authenticate, getAllUser);
 
 router.post('/refresh-token', refreshToken);
 
-router.post('/Dashboard',EmployeeModel.createEmployee)
-router.get("/Dashboard",EmployeeModel.getEmployees)
-router.put("/Dashboard/:id",EmployeeModel.updateEmployee)
-router.delete("/Dashboard/:id",EmployeeModel.deleteEmployee)
+router.post('/Employees',EmployeeModel.createEmployee)
+router.get("/Employees",EmployeeModel.getEmployees)
+router.put("/Employees/:id",EmployeeModel.updateEmployee)
+router.delete("/Employees/:id",EmployeeModel.deleteEmployee)
 router.get("/profile/:id",EmployeeModel.getEmployee)
 
 

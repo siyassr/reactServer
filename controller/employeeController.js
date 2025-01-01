@@ -10,25 +10,31 @@ exports. getEmployees = async (req, res) => {
 };
 
 exports. createEmployee =async (req, res) => {
-    const {
-        salutation, firstName, lastName, username, password, email,
-        phone, dob, gender, address, qualifications, country, state, city, pincode
-    } = req.body;
-   
-
-    if (!salutation || !firstName || !lastName || !username || !password || !email ||
-        !phone || !dob || !address || !qualifications || !country || !state ||
-        !city || !pincode) {
-        res.status(400);
-        throw new Error("All fields are mandatory!");
+    try {
+        const {
+            salutation, firstName, lastName, username, password, email,avatar,
+            phone, dob, gender, address, qualifications, country, state, city, pincode
+        } = req.body;
+       
+    
+        if (!salutation || !firstName || !lastName || !username || !password || !email || !avatar||
+            !phone || !dob || !address || !qualifications || !country || !state ||
+            !city || !pincode) {
+            res.status(400);
+            throw new Error("All fields are mandatory!");
+        }
+    
+        const employee = await Employees.create({
+            salutation, firstName, lastName, username, password, email,
+            phone, dob, gender, address, qualifications, country, state, city, pincode,avatar
+        });
+    
+        res.status(201).json({"Added employess":employee});
+        
+    } catch (error) {
+        res.status(500).json({ message: "Server error create", error: error.message });
     }
-
-    const employee = await Employees.create({
-        salutation, firstName, lastName, username, password, email,
-        phone, dob, gender, address, qualifications, country, state, city, pincode
-    });
-
-    res.status(201).json({"Added employess":employee});
+    
 }; 
 
 
