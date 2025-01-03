@@ -5,7 +5,7 @@ const router = require('./route/route');
 const cookieParser = require('cookie-parser');
 const http = require('http');
 require('dotenv').config();
-
+const path = require("path")
 const app = express();
 
 const server = http.createServer(app);
@@ -17,7 +17,7 @@ const corsOptions = {
   credentials: true,
 };
 
-
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,3 +30,4 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is ru port ${PORT}`);
 });
+

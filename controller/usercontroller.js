@@ -24,6 +24,7 @@ exports.signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
+    console.log(user,"userrrr");
 
     res.status(201).json({
       message: 'User signed up successfully',
@@ -45,6 +46,7 @@ exports.signin = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
+    console.log(user,"userdfgdrgb");
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
     }
@@ -54,8 +56,8 @@ exports.signin = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    const accessToken = jwt.sign({ user_id: user._id }, process.env.SECRET_KEY, )
-    const refreshToken = jwt.sign({ user_id: user._id }, process.env.SECRET_KEY, )
+    const accessToken = jwt.sign({ user_id: user._id ,username:user.username,email:user.email}, process.env.SECRET_KEY, )
+    const refreshToken = jwt.sign({ user_id: user._id ,username:user.username,email:user.email}, process.env.SECRET_KEY, )
 
      user.refreshToken = refreshToken;
      console.log(accessToken,'accesstoken')
@@ -94,7 +96,8 @@ exports.refreshToken = async (req, res) => {
       }
 
     
-      const accessToken = jwt.sign({ user_id: user._id }, process.env.SECRET_KEY,) //{ expiresIn: '15m' });
+      const accessToken = jwt.sign({ user_id: user._id }, process.env.SECRET_KEY,) 
+      console.log(accessToken,"accessToken");
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -166,4 +169,23 @@ exports.logout = async (req, res) => {
     res.status(500).json({ message: 'Error during logout', error: error.message });
   }
 };
+
+
+exports.Verify = async(req,res)=>{
+  const { token } = req.body;
+  console.log(token,"tokennnnnnnnnnnnnn");
+
+  if (!token) {
+    return res.status(400).json({ valid: false, message: "No token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(decoded,"decoded");
+    res.json({ valid: true, user: decoded });
+  } catch (err) {
+    res.status(401).json({ valid: false, message: "Invalid or expired token" });
+  }
+}
+
 

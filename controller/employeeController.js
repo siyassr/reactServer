@@ -12,12 +12,15 @@ exports. getEmployees = async (req, res) => {
 exports. createEmployee =async (req, res) => {
     try {
         const {
-            salutation, firstName, lastName, username, password, email,avatar,
-            phone, dob, gender, address, qualifications, country, state, city, pincode
+            salutation, firstName, lastName, username, password, email,
+            phone, dob, gender, address, qualifications, country, state, city, pincode,avatar
         } = req.body;
+
+        console.log(salutation,firstName,lastName,username,password,email,phone,dob,gender,address,qualifications,country,state,city,pincode,avatar)
+
        
     
-        if (!salutation || !firstName || !lastName || !username || !password || !email || !avatar||
+        if (!salutation || !firstName || !lastName || !username || !password || !email || 
             !phone || !dob || !address || !qualifications || !country || !state ||
             !city || !pincode) {
             res.status(400);
