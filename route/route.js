@@ -25,8 +25,8 @@ router.delete("/Employees/:id",EmployeeModel.deleteEmployee)
 router.get("/profile/:id",EmployeeModel.getEmployee)
 
 router.post('/verify-token',Verify)
+// router.get('/search',EmployeeModel.search)
 
-// router.post('/upload-avatar', upload.single('avatar'), uploadAvatar);
 
 
 
